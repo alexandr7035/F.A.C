@@ -1,7 +1,9 @@
 package com.alexandr7035.fac
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.fac.adapters.AlarmsListAdapter
@@ -32,6 +34,11 @@ class MainActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
 
 
+    }
+
+    fun addAlarmBtn(v: View) {
+        val intent = Intent(this, AlarmActivity::class.java)
+        startActivity(intent)
     }
 
 }
