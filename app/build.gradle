@@ -51,5 +51,7 @@ dependencies {
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
 
+    // NumberPicker from github
+    implementation 'com.shawnlin:number-picker:2.4.11'
 
 }
