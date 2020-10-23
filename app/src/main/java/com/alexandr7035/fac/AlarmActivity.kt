@@ -1,16 +1,23 @@
 package com.alexandr7035.fac
 
+import android.content.Context
 import android.os.Bundle
+import android.os.Vibrator
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_alarm.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 
+
 class AlarmActivity : AppCompatActivity() {
+
+    private lateinit var vibrator: Vibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm)
+
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         // Close activity on navigation btn click
         toolbar.setNavigationOnClickListener { finish() }
@@ -22,6 +29,6 @@ class AlarmActivity : AppCompatActivity() {
         }
 
 
-
     }
+
 }
