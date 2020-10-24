@@ -8,4 +8,6 @@ import androidx.room.PrimaryKey
 class AlarmEntity(@PrimaryKey(autoGenerate = true)
                   var id: Int = 0,
                   var name: String,
-                  var time: Long = 0)
+                  var hours: Int = 0,
+                  var minutes: Int = 0,
+                  var task_id: Int = 0)
