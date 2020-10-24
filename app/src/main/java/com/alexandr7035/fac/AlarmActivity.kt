@@ -29,14 +29,28 @@ class AlarmActivity : AppCompatActivity() {
         // Close activity on navigation btn click
         toolbar.setNavigationOnClickListener { finish() }
 
-        // Set "add alarm" header if no alarm_id passed
+        // if no alarm_id passed
         // (if new alarm is creating)
         if (intent.getIntExtra("ALARM_ID", 0) == 0) {
+
+            // Set "add alarm" header
             toolbar.toolbarTitle.text = getString(R.string.add_alarm_title)
+
+            // Init clock with current time
+            val initialCalendar = Calendar.getInstance()
+            hoursView.text = initialCalendar.get(Calendar.HOUR_OF_DAY).toString()
+            minutesView.text = initialCalendar.get(Calendar.MINUTE).toString()
+
+        }
+        else {
+
         }
 
-        // FIX ME
-        // TEST BLOCK
+
+
+    }
+
+    fun saveAlarm() {
 
         val calendar: Calendar = Calendar.getInstance()
 
@@ -59,7 +73,6 @@ class AlarmActivity : AppCompatActivity() {
         )
 
         alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent);
-
     }
 
 }
