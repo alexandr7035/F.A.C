@@ -22,7 +22,7 @@ abstract class AlarmsDB : RoomDatabase() {
             if (sInstance == null) {
                 sInstance = Room
                     .databaseBuilder(context.applicationContext, AlarmsDB::class.java, dbName)
-                    .fallbackToDestructiveMigration().allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
                     .build()
             }
             return sInstance!!

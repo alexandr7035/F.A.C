@@ -2,19 +2,30 @@ package com.alexandr7035.fac.db
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.GlobalScope
+import java.util.concurrent.*
+import kotlinx.coroutines.launch
 
 class AlarmsRepository(private val context: Context) {
 
-    var db: AlarmsDB
+    private var db: AlarmsDB
     private var dao: AlarmsDao
+    private var executor: ExecutorService
 
     init {
         db = AlarmsDB.getInstance(context = this.context);
         dao = db.getDao()
+        executor = Executors.newSingleThreadExecutor()
     }
 
-    fun getAlarms(): LiveData<List<AlarmEntity>> {
+    fun getAlarmsFromDB(): LiveData<List<AlarmEntity>> {
         return dao.getAlarms()
+    }
+
+    fun addAlarmToDB(alarm: AlarmEntity) {
+        GlobalScope.launch {
+            dao.insert(alarm)
+        }
     }
 
 
