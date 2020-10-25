@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.fac.adapters.AlarmsListAdapter
 import com.alexandr7035.fac.db.AlarmEntity
 import com.alexandr7035.fac.viewmodel.MainViewModel
-import com.alexandr7035.skills10000.viewmodel.MainViewModelFactory
+import com.alexandr7035.fac.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

@@ -1,16 +1,16 @@
 package com.alexandr7035.fac
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.Vibrator
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
+import com.alexandr7035.fac.db.AlarmEntity
+import com.alexandr7035.fac.viewmodel.AlarmViewModel
+import com.alexandr7035.fac.viewmodel.AlarmViewModelFactory
 import kotlinx.android.synthetic.main.activity_alarm.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import java.util.*
@@ -21,11 +21,15 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     val LOG_TAG = "DEBUG_FAC"
     private lateinit var vibrator: Vibrator
-
+    private lateinit var viewModel: AlarmViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm)
+
+        // ViewModel
+        viewModel = ViewModelProvider(this, AlarmViewModelFactory(this)).get<AlarmViewModel>(
+           AlarmViewModel::class.java)
 
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -34,8 +38,6 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         toolbar.setOnMenuItemClickListener(this)
         // Close activity on navigation btn click
         toolbar.setNavigationOnClickListener { finish() }
-
-
 
 
         // if no alarm_id passed
@@ -61,6 +63,17 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     fun saveAlarm() {
 
+        val alarm: AlarmEntity = AlarmEntity()
+        alarm.hours = hoursView.text.toString().toInt()
+        alarm.minutes = minutesView.text.toString().toInt()
+        alarm.name = nameView.text.toString()
+        alarm.isEnabled = true
+
+        viewModel.addAlarm(alarm)
+
+        finish()
+
+        /*
         val calendar: Calendar = Calendar.getInstance()
 
         calendar.set(Calendar.HOUR_OF_DAY, 23)
@@ -70,7 +83,7 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
         Log.d(LOG_TAG, "set alarm at " + calendar.timeInMillis)
 
-        /*
+
 
      val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
@@ -93,6 +106,8 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem): Boolean {
         if (item.itemId == R.id.item_save_alarm) {
             Toast.makeText(this, "Save alarm", Toast.LENGTH_LONG).show()
+
+            saveAlarm()
         }
 
         return super.onOptionsItemSelected(item);
