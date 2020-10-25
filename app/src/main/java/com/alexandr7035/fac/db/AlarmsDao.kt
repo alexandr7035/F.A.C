@@ -15,6 +15,6 @@ interface AlarmsDao {
     @Delete
     fun delete(note: AlarmEntity)
 
-    @Query("select * from alarms order by time")
+    @Query("select * from alarms order by id")
     fun getAlarms(): LiveData<List<AlarmEntity>>
 }

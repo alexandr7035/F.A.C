@@ -7,13 +7,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Vibrator
 import android.util.Log
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_alarm.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import java.util.*
 
 
-class AlarmActivity : AppCompatActivity() {
+class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
 
     val LOG_TAG = "DEBUG_FAC"
@@ -26,8 +29,14 @@ class AlarmActivity : AppCompatActivity() {
 
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
+        // Toolbar settings
+        toolbar.inflateMenu(R.menu.menu_alarm_activity)
+        toolbar.setOnMenuItemClickListener(this)
         // Close activity on navigation btn click
         toolbar.setNavigationOnClickListener { finish() }
+
+
+
 
         // if no alarm_id passed
         // (if new alarm is creating)
@@ -61,18 +70,32 @@ class AlarmActivity : AppCompatActivity() {
 
         Log.d(LOG_TAG, "set alarm at " + calendar.timeInMillis)
 
-        val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        /*
+
+     val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
 
-        intent = Intent(this, AlarmReceiver::class.java)
+     intent = Intent(this, AlarmReceiver::class.java)
 
-        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(
-            this,
-            1, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
+     val pendingIntent : PendingIntent = PendingIntent.getBroadcast(
+         this,
+         1, intent,
+         PendingIntent.FLAG_UPDATE_CURRENT
+     )
 
-        alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent);
+     alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent);
+
+      */
+    }
+
+
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        if (item.itemId == R.id.item_save_alarm) {
+            Toast.makeText(this, "Save alarm", Toast.LENGTH_LONG).show()
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
