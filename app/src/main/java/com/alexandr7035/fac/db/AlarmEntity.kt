@@ -11,4 +11,4 @@ class AlarmEntity(@PrimaryKey(autoGenerate = true)
                   var hours: Int = 0,
                   var minutes: Int = 0,
                   var task_id: Int = 0,
-                  var isEnabled: Boolean = false)
+                  var enabled: Boolean = true)

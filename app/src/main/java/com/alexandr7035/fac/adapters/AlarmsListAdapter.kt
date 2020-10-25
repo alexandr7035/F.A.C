@@ -1,5 +1,6 @@
 package com.alexandr7035.fac.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.view_alarm.view.*
 class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
 
     private var items: List<AlarmEntity> = ArrayList()
+    val LOG_TAG = "DEBUG_FAC"
 
     fun setItems(items: List<AlarmEntity>) {
         this.items = items
@@ -29,12 +31,23 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: AlarmsListAdapter.ViewHolder, position: Int) {
+
+        // Set alarm name
         holder.itemView.nameView.text = items[position].name
 
+        // Set time
         val time = "" + items[position].hours + ":" + items[position].minutes
         holder.itemView.timeView.text = time
 
-        holder.itemView.toggleBtn.setImageResource(R.drawable.ic_alarm_clock_off)
+        // Set icon to clock btn
+        if (items[position].enabled){
+            holder.itemView.toggleBtn.setImageResource(R.drawable.ic_alarm_clock_off)
+        }
+        else {
+            holder.itemView.toggleBtn.setImageResource(R.drawable.ic_alarm_clock)
+        }
+
+        Log.d(LOG_TAG, holder.itemView.isEnabled.toString())
 
     }
 

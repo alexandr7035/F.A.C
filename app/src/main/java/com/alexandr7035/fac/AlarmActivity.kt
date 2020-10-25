@@ -61,13 +61,13 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     }
 
-    fun saveAlarm() {
+    private fun saveAlarm() {
 
-        val alarm: AlarmEntity = AlarmEntity()
+        val alarm = AlarmEntity()
         alarm.hours = hoursView.text.toString().toInt()
         alarm.minutes = minutesView.text.toString().toInt()
         alarm.name = nameView.text.toString()
-        alarm.isEnabled = true
+        alarm.enabled = true
 
         viewModel.addAlarm(alarm)
 
