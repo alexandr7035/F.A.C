@@ -29,7 +29,10 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: AlarmsListAdapter.ViewHolder, position: Int) {
-        holder.itemView.nameView.text = items.get(position).name
+        holder.itemView.nameView.text = items[position].name
+
+        val time = "" + items[position].hours + ":" + items[position].minutes
+        holder.itemView.timeView.text = time
 
         holder.itemView.toggleBtn.setImageResource(R.drawable.ic_alarm_clock_off)
 
