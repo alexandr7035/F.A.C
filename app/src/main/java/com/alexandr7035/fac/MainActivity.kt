@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     private val adapter: AlarmsListAdapter = AlarmsListAdapter()
     private lateinit var viewModel: MainViewModel
 
+    private lateinit var defaultClickListener: DefaultItemClickListener
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,12 +46,25 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        defaultClickListener = DefaultItemClickListener()
+        adapter.setAlarmClickListener(defaultClickListener)
+
     }
 
 
     fun addAlarmBtn(v: View) {
         val intent = Intent(this, AlarmActivity::class.java)
         startActivity(intent)
+    }
+
+
+    inner class DefaultItemClickListener: AlarmsListAdapter.AlarmClickListener {
+        override fun onAlarmClick(alarm_id: Int, position: Int) {
+            //Log.d(LOG_TAG, "clicked position " + position + " id " + skill_id);
+            val intent = Intent(this@MainActivity, AlarmActivity::class.java)
+            intent.putExtra("PASSED_ALARM_ID", alarm_id)
+            startActivity(intent)
+        }
     }
 
 }

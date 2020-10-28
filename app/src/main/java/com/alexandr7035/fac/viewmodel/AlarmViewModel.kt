@@ -14,5 +14,8 @@ class AlarmViewModel(context: Context) : ViewModel() {
         repository.addAlarmToDB(alarm)
     }
 
+    fun getAlarmById(id: Int): LiveData<AlarmEntity> {
+        return repository.getAlarmFromDB(id)
+    }
 
 }

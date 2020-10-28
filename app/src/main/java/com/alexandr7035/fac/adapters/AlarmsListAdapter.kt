@@ -13,6 +13,7 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
 
     private var items: List<AlarmEntity> = ArrayList()
     val LOG_TAG = "DEBUG_FAC"
+    private lateinit var alarmClickListener: AlarmClickListener
 
     fun setItems(items: List<AlarmEntity>) {
         this.items = items
@@ -47,14 +48,53 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
             holder.itemView.toggleBtn.setImageResource(R.drawable.ic_alarm_clock)
         }
 
+        // Set id
+        holder.alarmId = items.get(position).id
+
+
         Log.d(LOG_TAG, holder.itemView.isEnabled.toString())
 
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+                                View.OnClickListener,
+                                View.OnLongClickListener {
+
+        // Set in onBindViewHolder
+        var alarmId: Int = 0
+
+        init {
+            itemView.setOnClickListener(this)
+            itemView.setOnLongClickListener(this)
+        }
+
+
+        override fun onClick(v: View?) {
+            alarmClickListener.onAlarmClick(alarmId, adapterPosition)
+        }
+
+        override fun onLongClick(v: View?): Boolean {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
 
     }
 
 
+    interface AlarmClickListener {
+        fun onAlarmClick(alarm_id: Int, position: Int)
+    }
+
+    interface AlarmLongClickListener {
+        fun onLongAlarmClick(alarm_id: Int, position: Int)
+    }
+
+   fun setAlarmClickListener(listener: AlarmClickListener) {
+        alarmClickListener = listener
+    }
+
+   fun setAlarmLongClickListener(listener: AlarmLongClickListener) {
+
+    }
 
 }

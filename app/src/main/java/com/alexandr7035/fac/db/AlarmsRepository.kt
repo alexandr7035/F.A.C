@@ -28,5 +28,9 @@ class AlarmsRepository(private val context: Context) {
         }
     }
 
+    fun getAlarmFromDB(id: Int): LiveData<AlarmEntity> {
+        return dao.getAlarmById(id)
+    }
+
 
 }

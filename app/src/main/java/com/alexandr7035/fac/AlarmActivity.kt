@@ -7,13 +7,15 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alexandr7035.fac.db.AlarmEntity
 import com.alexandr7035.fac.viewmodel.AlarmViewModel
 import com.alexandr7035.fac.viewmodel.AlarmViewModelFactory
 import kotlinx.android.synthetic.main.activity_alarm.*
 import kotlinx.android.synthetic.main.activity_main.view.*
-import java.util.*
+import java.util.Calendar
 
 
 class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
@@ -23,13 +25,37 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private lateinit var vibrator: Vibrator
     private lateinit var viewModel: AlarmViewModel
 
+    private lateinit var alarmLiveData: LiveData<AlarmEntity>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm)
 
-        // ViewModel
+        // ViewModel & LiveData
         viewModel = ViewModelProvider(this, AlarmViewModelFactory(this)).get<AlarmViewModel>(
            AlarmViewModel::class.java)
+
+        val passedAlarmId: Int = intent.getIntExtra("PASSED_ALARM_ID", 0)
+
+        // Load LiveData from DB or create new
+        if (passedAlarmId != 0) {
+            alarmLiveData = viewModel.getAlarmById(passedAlarmId)
+        }
+        else {
+
+        }
+
+
+        alarmLiveData.observe(this, Observer<AlarmEntity> { alarm ->
+            if (alarm != null ) {
+                toolbarTitle.text = alarm.name
+                hoursView.text = alarm.hours.toString()
+                minutesView.text = alarm.minutes.toString()
+                // Need to use setter because text property requires Editable
+                nameView.setText(alarm.name)
+            }
+        })
+
 
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -40,9 +66,13 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         toolbar.setNavigationOnClickListener { finish() }
 
 
+
+
+
         // if no alarm_id passed
         // (if new alarm is creating)
         if (intent.getIntExtra("ALARM_ID", 0) == 0) {
+
 
             // Set "add alarm" header
             toolbar.toolbarTitle.text = getString(R.string.add_alarm_title)
