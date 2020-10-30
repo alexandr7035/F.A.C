@@ -3,4 +3,5 @@
 
     <string name="add_alarm_title">Добавть будильник</string>
     <string name="alarm_set_name_hint">Название</string>
+    <string name="alarm_default_name">Будильник</string>
 </resources>

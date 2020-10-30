@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alexandr7035.fac.db.AlarmEntity
@@ -41,7 +42,17 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         if (passedAlarmId != 0) {
             alarmLiveData = viewModel.getAlarmById(passedAlarmId)
         }
+        // Set params for a new alarm
         else {
+
+            val newAlarm = AlarmEntity()
+            val initialCalendar = Calendar.getInstance()
+
+            newAlarm.name = getString(R.string.alarm_default_name)
+            newAlarm.hours = initialCalendar.get(Calendar.HOUR_OF_DAY)
+            newAlarm.minutes = initialCalendar.get(Calendar.MINUTE)
+
+            alarmLiveData = MutableLiveData<AlarmEntity>(newAlarm)
 
         }
 
@@ -64,28 +75,6 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         toolbar.setOnMenuItemClickListener(this)
         // Close activity on navigation btn click
         toolbar.setNavigationOnClickListener { finish() }
-
-
-
-
-
-        // if no alarm_id passed
-        // (if new alarm is creating)
-        if (intent.getIntExtra("ALARM_ID", 0) == 0) {
-
-
-            // Set "add alarm" header
-            toolbar.toolbarTitle.text = getString(R.string.add_alarm_title)
-
-            // Init clock with current time
-            val initialCalendar = Calendar.getInstance()
-            hoursView.text = initialCalendar.get(Calendar.HOUR_OF_DAY).toString()
-            minutesView.text = initialCalendar.get(Calendar.MINUTE).toString()
-
-        }
-        else {
-
-        }
 
 
 
