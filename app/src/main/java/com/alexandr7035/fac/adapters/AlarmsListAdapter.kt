@@ -37,7 +37,8 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
         holder.itemView.nameView.text = items[position].name
 
         // Set time
-        val time = "" + items[position].hours + ":" + items[position].minutes
+        // Add leading zeroes where necessary using String.format
+        val time = String.format("%02d", items[position].hours) + ":" + String.format("%02d", items[position].minutes)
         holder.itemView.timeView.text = time
 
         // Set icon to clock btn

@@ -61,8 +61,10 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         alarmLiveData.observe(this, Observer<AlarmEntity> { alarm ->
             if (alarm != null ) {
                 toolbarTitle.text = alarm.name
-                hoursView.text = alarm.hours.toString()
-                minutesView.text = alarm.minutes.toString()
+
+                // Add leading zeroes where necessary using String.format
+                hoursView.text = String.format("%02d", alarm.hours)
+                minutesView.text = String.format("%02d", alarm.minutes)
                 // Need to use setter because text property requires Editable
                 nameView.setText(alarm.name)
             }
