@@ -10,7 +10,7 @@ interface AlarmsDao {
     suspend fun insert(alarm: AlarmEntity)
 
     @Update
-    fun update(alarm: AlarmEntity)
+    suspend fun update(alarm: AlarmEntity)
 
     @Delete
     fun delete(note: AlarmEntity)
@@ -19,5 +19,5 @@ interface AlarmsDao {
     fun getAlarms(): LiveData<List<AlarmEntity>>
 
     @Query("SELECT * FROM alarms WHERE id = (:id)")
-    fun getAlarmById(id: Int): LiveData<AlarmEntity>
+    fun getAlarmById(id: Int): AlarmEntity
 }

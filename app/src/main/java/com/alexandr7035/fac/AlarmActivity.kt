@@ -3,7 +3,9 @@ package com.alexandr7035.fac
 import android.content.Context
 import android.os.Bundle
 import android.os.Vibrator
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -15,7 +17,6 @@ import com.alexandr7035.fac.db.AlarmEntity
 import com.alexandr7035.fac.viewmodel.AlarmViewModel
 import com.alexandr7035.fac.viewmodel.AlarmViewModelFactory
 import kotlinx.android.synthetic.main.activity_alarm.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import java.util.Calendar
 
 
@@ -25,8 +26,8 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     val LOG_TAG = "DEBUG_FAC"
     private lateinit var vibrator: Vibrator
     private lateinit var viewModel: AlarmViewModel
-
-    private lateinit var alarmLiveData: LiveData<AlarmEntity>
+    private lateinit var alarmLiveData: MutableLiveData<AlarmEntity>
+    private var passedAlarmId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +37,7 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         viewModel = ViewModelProvider(this, AlarmViewModelFactory(this)).get<AlarmViewModel>(
            AlarmViewModel::class.java)
 
-        val passedAlarmId: Int = intent.getIntExtra("PASSED_ALARM_ID", 0)
+        passedAlarmId = intent.getIntExtra("PASSED_ALARM_ID", 0)
 
         // Load LiveData from DB or create new
         if (passedAlarmId != 0) {
@@ -82,13 +83,24 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private fun saveAlarm() {
 
+
         val alarm = AlarmEntity()
         alarm.hours = hoursView.text.toString().toInt()
         alarm.minutes = minutesView.text.toString().toInt()
         alarm.name = nameView.text.toString()
         alarm.enabled = true
 
-        viewModel.addAlarm(alarm)
+        Log.d(LOG_TAG, alarm.toString())
+
+
+        // Create new alarm or update if already exists in db
+        if (passedAlarmId == 0) {
+            viewModel.addAlarm(alarm)
+        }
+        else {
+            alarm.id = passedAlarmId
+            viewModel.updateAlarm(alarm)
+        }
 
         finish()
 
@@ -131,5 +143,72 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    fun increaseHourBtn(v: View) {
+
+        val alarmEntity = alarmLiveData.value
+
+        if (alarmEntity != null) {
+            if (alarmEntity.hours < 23) {
+                alarmEntity.hours += 1
+            }
+        }
+
+        Log.d(LOG_TAG, "increase hours clicked")
+
+        alarmLiveData.value = alarmEntity
+
+    }
+
+    fun decreaseHoursBtn(v: View) {
+        val alarmEntity = alarmLiveData.value
+
+        if (alarmEntity != null) {
+            if (alarmEntity.hours > 0) {
+                alarmEntity.hours -= 1
+            }
+        }
+
+        Log.d(LOG_TAG, "decrease hours clicked")
+
+        alarmLiveData.value = alarmEntity
+
+    }
+
+    fun increaseMinutesBtn(v: View) {
+
+        val alarmEntity = alarmLiveData.value
+
+        if (alarmEntity != null) {
+            if (alarmEntity.minutes < 59) {
+                alarmEntity.minutes += 1
+            }
+        }
+
+        Log.d(LOG_TAG, "increase minutes clicked")
+
+        alarmLiveData.value = alarmEntity
+
+
+    }
+
+    fun decreaseMinutesBtn(v: View) {
+        val alarmEntity = alarmLiveData.value
+
+        if (alarmEntity != null) {
+            if (alarmEntity.minutes > 0) {
+                alarmEntity.minutes -= 1
+            }
+        }
+
+        Log.d(LOG_TAG, "decrease minutes clicked")
+
+        alarmLiveData.value = alarmEntity
+
+    }
+
+
 
 }
