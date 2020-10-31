@@ -1,9 +1,16 @@
 package com.alexandr7035.fac
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +21,7 @@ import com.alexandr7035.fac.viewmodel.MainViewModel
 import com.alexandr7035.fac.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
     private val LOG_TAG: String = "DEBUG_FAC"
@@ -22,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var defaultClickListener: DefaultItemClickListener
 
+    var notId: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,4 +76,41 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    // FIXME
+    fun testNotifications(v: View) {
+
+       notId += 1
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val channel = NotificationChannel(
+                    "FAC_CHANNEL", "F.A.C notifications channel",
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                channel.description = ""
+                channel.enableLights(true)
+                channel.lightColor = Color.RED
+                channel.enableVibration(false)
+                notificationManager.createNotificationChannel(channel)
+            }
+
+
+            var builder = NotificationCompat.Builder(this, "FAC_CHANNEL")
+                .setContentTitle("TITLE")
+                .setContentText("Alarm")
+                .setSmallIcon(R.drawable.ic_alarm_clock)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+
+            with(NotificationManagerCompat.from(this)) {
+                // notificationId is a unique int for each notification that you must define
+                notify(1, builder.build())
+            }
+        }
+    }
 }
