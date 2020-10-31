@@ -156,6 +156,9 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             if (alarmEntity.hours < 23) {
                 alarmEntity.hours += 1
             }
+            else {
+                alarmEntity.hours = 0
+            }
         }
 
         Log.d(LOG_TAG, "increase hours clicked")
@@ -170,6 +173,9 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         if (alarmEntity != null) {
             if (alarmEntity.hours > 0) {
                 alarmEntity.hours -= 1
+            }
+            else {
+                alarmEntity.hours = 23
             }
         }
 
@@ -187,6 +193,9 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             if (alarmEntity.minutes < 59) {
                 alarmEntity.minutes += 1
             }
+            else {
+                alarmEntity.minutes = 0
+            }
         }
 
         Log.d(LOG_TAG, "increase minutes clicked")
@@ -202,6 +211,9 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         if (alarmEntity != null) {
             if (alarmEntity.minutes > 0) {
                 alarmEntity.minutes -= 1
+            }
+            else {
+                alarmEntity.minutes = 59
             }
         }
 
