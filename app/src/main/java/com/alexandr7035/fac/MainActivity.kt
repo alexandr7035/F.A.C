@@ -82,22 +82,7 @@ class MainActivity : AppCompatActivity() {
 
        notId += 1
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
-            val notificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(
-                    "FAC_CHANNEL", "F.A.C notifications channel",
-                    NotificationManager.IMPORTANCE_HIGH
-                )
-                channel.description = ""
-                channel.enableLights(true)
-                channel.lightColor = Color.RED
-                channel.enableVibration(false)
-                notificationManager.createNotificationChannel(channel)
-            }
 
 
             var builder = NotificationCompat.Builder(this, "FAC_CHANNEL")
@@ -112,5 +97,5 @@ class MainActivity : AppCompatActivity() {
                 notify(1, builder.build())
             }
         }
-    }
+
 }
