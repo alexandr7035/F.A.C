@@ -1,4 +1,4 @@
-package com.alexandr7035.fac
+package com.alexandr7035.fac.alarm
 
 import android.content.BroadcastReceiver
 import android.content.Context

@@ -4,15 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.fac.adapters.AlarmsListAdapter
+import com.alexandr7035.fac.alarm.AlarmNotification
 import com.alexandr7035.fac.db.AlarmEntity
-import com.alexandr7035.fac.services.SoundService
 import com.alexandr7035.fac.viewmodel.MainViewModel
 import com.alexandr7035.fac.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
@@ -76,7 +74,8 @@ class MainActivity : AppCompatActivity() {
     // FIXME
     fun testNotifications(v: View) {
 
-        var notification: AlarmNotification = AlarmNotification(this, AlarmEntity())
+        var notification: AlarmNotification =
+            AlarmNotification(this, AlarmEntity())
 
         notification.show()
 

@@ -1,9 +1,10 @@
-package com.alexandr7035.fac
+package com.alexandr7035.fac.alarm
 
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.alexandr7035.fac.R
 import com.alexandr7035.fac.db.AlarmEntity
 import com.alexandr7035.fac.services.SoundService
 
