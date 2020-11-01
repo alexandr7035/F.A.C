@@ -76,25 +76,12 @@ class MainActivity : AppCompatActivity() {
     // FIXME
     fun testNotifications(v: View) {
 
-       notId += 1
+        var notification: AlarmNotification = AlarmNotification(this, AlarmEntity())
 
-
-
-
-            var builder = NotificationCompat.Builder(this, "FAC_CHANNEL")
-                .setContentTitle("TITLE")
-                .setContentText("Alarm")
-                .setSmallIcon(R.drawable.ic_alarm_clock)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-
-            with(NotificationManagerCompat.from(this)) {
-                // notificationId is a unique int for each notification that you must define
-                notify(1, builder.build())
-            }
+        notification.show()
 
         //start service and play music
-        startService(Intent(this@MainActivity, SoundService::class.java))
+        //startService(Intent(this@MainActivity, SoundService::class.java))
 
 
     }
