@@ -28,6 +28,7 @@ class FacApplication: Application() {
                 channel.enableLights(true)
                 channel.lightColor = Color.RED
                 channel.enableVibration(false)
+
                 notificationManager.createNotificationChannel(channel)
             }
 

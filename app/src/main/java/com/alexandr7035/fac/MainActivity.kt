@@ -1,11 +1,6 @@
 package com.alexandr7035.fac
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.fac.adapters.AlarmsListAdapter
 import com.alexandr7035.fac.db.AlarmEntity
+import com.alexandr7035.fac.services.SoundService
 import com.alexandr7035.fac.viewmodel.MainViewModel
 import com.alexandr7035.fac.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
@@ -96,6 +92,12 @@ class MainActivity : AppCompatActivity() {
                 // notificationId is a unique int for each notification that you must define
                 notify(1, builder.build())
             }
-        }
+
+        //start service and play music
+        startService(Intent(this@MainActivity, SoundService::class.java))
+
+
+    }
+
 
 }
