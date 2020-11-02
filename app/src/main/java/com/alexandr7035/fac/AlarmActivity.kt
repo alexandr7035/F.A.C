@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.alexandr7035.fac.alarm.AlarmController
 import com.alexandr7035.fac.db.AlarmEntity
 import com.alexandr7035.fac.viewmodel.AlarmViewModel
 import com.alexandr7035.fac.viewmodel.AlarmViewModelFactory
@@ -79,8 +80,6 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         // Close activity on navigation btn click
         toolbar.setNavigationOnClickListener { finish() }
 
-
-
     }
 
     private fun saveAlarm() {
@@ -106,32 +105,6 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
         finish()
 
-        /*
-        val calendar: Calendar = Calendar.getInstance()
-
-        calendar.set(Calendar.HOUR_OF_DAY, 23)
-        calendar.set(Calendar.MINUTE, 32)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-
-        Log.d(LOG_TAG, "set alarm at " + calendar.timeInMillis)
-
-
-
-     val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-
-     intent = Intent(this, AlarmReceiver::class.java)
-
-     val pendingIntent : PendingIntent = PendingIntent.getBroadcast(
-         this,
-         1, intent,
-         PendingIntent.FLAG_UPDATE_CURRENT
-     )
-
-     alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent);
-
-      */
     }
 
 
