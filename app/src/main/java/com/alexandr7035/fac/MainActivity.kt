@@ -1,5 +1,6 @@
 package com.alexandr7035.fac
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,11 +10,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexandr7035.fac.adapters.AlarmsListAdapter
+import com.alexandr7035.fac.alarm.AlarmController
 import com.alexandr7035.fac.alarm.AlarmNotification
 import com.alexandr7035.fac.db.AlarmEntity
+import com.alexandr7035.fac.db.AlarmsRepository
 import com.alexandr7035.fac.viewmodel.MainViewModel
 import com.alexandr7035.fac.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -74,6 +79,17 @@ class MainActivity : AppCompatActivity() {
     // FIXME
     fun testNotifications(v: View) {
 
+
+        val ctx = this as Context
+
+        GlobalScope.launch {
+            val alarm = AlarmsRepository(ctx).getAlarmFromDB(1)
+
+
+            AlarmController.enableAlarm(ctx, alarm)
+        }
+
+        /*
         var notification: AlarmNotification =
             AlarmNotification(this, AlarmEntity())
 
@@ -82,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         //start service and play music
         //startService(Intent(this@MainActivity, SoundService::class.java))
 
-
+        */
     }
 
 

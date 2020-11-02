@@ -19,5 +19,8 @@ interface AlarmsDao {
     fun getAlarms(): LiveData<List<AlarmEntity>>
 
     @Query("SELECT * FROM alarms WHERE id = (:id)")
-    fun getAlarmById(id: Int): AlarmEntity
+    fun getAlarmLiveDataById(id: Int): AlarmEntity
+
+    @Query("SELECT * FROM alarms WHERE id = (:id)")
+    fun getAlarmaById(id: Int): AlarmEntity
 }

@@ -1,7 +1,6 @@
 package com.alexandr7035.fac.viewmodel
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.alexandr7035.fac.db.AlarmEntity
@@ -16,7 +15,7 @@ class AlarmViewModel(context: Context) : ViewModel() {
     }
 
     fun getAlarmById(id: Int): MutableLiveData<AlarmEntity> {
-        return repository.getAlarmFromDB(id)
+        return repository.getAlarmLiveDataFromDB(id)
     }
 
     fun updateAlarm(alarm: AlarmEntity) {

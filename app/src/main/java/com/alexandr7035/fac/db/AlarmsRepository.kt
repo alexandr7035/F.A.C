@@ -1,7 +1,6 @@
 package com.alexandr7035.fac.db
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.GlobalScope
 import java.util.concurrent.*
@@ -36,12 +35,12 @@ class AlarmsRepository(private val context: Context) {
     }
 
 
-    fun getAlarmFromDB(id: Int): MutableLiveData<AlarmEntity> {
+    fun getAlarmLiveDataFromDB(id: Int): MutableLiveData<AlarmEntity> {
 
         alarmLiveData = MutableLiveData()
 
         GlobalScope.launch {
-            alarmLiveData.postValue(dao.getAlarmById(id))
+            alarmLiveData.postValue(dao.getAlarmLiveDataById(id))
         }
 
         return alarmLiveData
@@ -54,5 +53,9 @@ class AlarmsRepository(private val context: Context) {
         }
     }
 
+
+    fun getAlarmFromDB(id: Int): AlarmEntity {
+        return dao.getAlarmaById(id)
+    }
 
 }
