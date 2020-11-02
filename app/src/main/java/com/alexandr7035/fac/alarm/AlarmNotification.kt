@@ -50,8 +50,6 @@ class AlarmNotification(private var context: Context, alarm: AlarmEntity) {
         with(NotificationManagerCompat.from(context)) {
             // notificationId is a unique int for each notification that you must define
             notify(notificationId, builder.build())
-
-            playSound()
         }
     }
 
@@ -62,9 +60,5 @@ class AlarmNotification(private var context: Context, alarm: AlarmEntity) {
         return  (0..32000).random()
     }
 
-
-    private fun playSound() {
-        context.startService(Intent(context, SoundService::class.java))
-    }
 
 }

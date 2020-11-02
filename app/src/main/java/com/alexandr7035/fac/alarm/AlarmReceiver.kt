@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import com.alexandr7035.fac.db.AlarmEntity
 import com.alexandr7035.fac.db.AlarmsRepository
+import com.alexandr7035.fac.services.SoundService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -29,6 +30,8 @@ class AlarmReceiver : BroadcastReceiver() {
 
             val notification = AlarmNotification(context, alarm)
             notification.show()
+
+            context.startService(Intent(context, SoundService::class.java))
         }
 
         Toast.makeText(context, "Alarm triggered", Toast.LENGTH_SHORT).show()
