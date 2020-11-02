@@ -1,5 +1,6 @@
 package com.alexandr7035.fac.alarm
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
@@ -7,6 +8,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.alexandr7035.fac.R
 import com.alexandr7035.fac.db.AlarmEntity
 import com.alexandr7035.fac.services.SoundService
+
 
 class AlarmNotification(private var context: Context, alarm: AlarmEntity) {
 
@@ -16,6 +18,9 @@ class AlarmNotification(private var context: Context, alarm: AlarmEntity) {
     private var notificationId: Int = 0
 
     init {
+
+        notificationId = genId()
+
         // Set params
         builder.setContentTitle(alarm.name)
         builder.setContentText("Будильник - ${alarm.hours}:${alarm.minutes}")
@@ -23,10 +28,21 @@ class AlarmNotification(private var context: Context, alarm: AlarmEntity) {
         builder.priority = NotificationCompat.PRIORITY_MAX
 
         // Put buttons on notification
-        builder.addAction(R.drawable.ic_alarm_clock_off, context.getString(R.string.fac_notification_action_stop),  null)
+
+        val actionIntent = Intent(context, NotificationActionReceiver::class.java)
+        actionIntent.putExtra("ACTION", "stop")
+        actionIntent.putExtra("NOTIFICATION_ID", notificationId)
+
+        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(
+            context,
+            this.notificationId,
+            actionIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT)
+
+        builder.addAction(R.drawable.ic_alarm_clock_off, context.getString(R.string.fac_notification_action_stop),  pendingIntent)
         builder.addAction(R.drawable.ic_alarm_clock_off, context.getString(R.string.fac_notification_action_hold), null)
 
-        notificationId = genId()
+
 
     }
 

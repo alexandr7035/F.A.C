@@ -22,6 +22,7 @@
         </activity>
 
         <receiver android:name=".alarm.AlarmReceiver" />
+        <receiver android:name=".alarm.NotificationActionReceiver" />
         <service android:name=".services.SoundService" />
     </application>
 
