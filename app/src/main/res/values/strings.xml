@@ -6,5 +6,7 @@
     <string name="alarm_default_name">Будильник</string>
 
     <!-- Notifications block -->
-    <string name="fac_notifications_channel_name">Уведомления(будильники)</string>
+    <string name="fac_notifications_channel_name">Уведомления (будильники)</string>
+    <string name="fac_notification_action_stop">Отключить</string>
+    <string name="fac_notification_action_hold">Отложить</string>
 </resources>

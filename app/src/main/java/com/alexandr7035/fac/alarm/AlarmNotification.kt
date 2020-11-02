@@ -22,6 +22,9 @@ class AlarmNotification(private var context: Context, alarm: AlarmEntity) {
         builder.setSmallIcon(R.drawable.ic_alarm_clock)
         builder.priority = NotificationCompat.PRIORITY_MAX
 
+        // Put buttons on notification
+        builder.addAction(R.drawable.ic_alarm_clock_off, context.getString(R.string.fac_notification_action_stop),  null)
+        builder.addAction(R.drawable.ic_alarm_clock_off, context.getString(R.string.fac_notification_action_hold), null)
 
         notificationId = genId()
 
