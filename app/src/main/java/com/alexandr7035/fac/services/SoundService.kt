@@ -36,6 +36,7 @@ class SoundService: Service() {
             player.setAudioAttributes(
                 AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_ALARM)
                     .build()
             )
             player.prepare()
