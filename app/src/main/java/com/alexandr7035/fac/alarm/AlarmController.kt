@@ -41,6 +41,12 @@ class AlarmController {
             calendar.set(Calendar.SECOND, 0)
             calendar.set(Calendar.MILLISECOND, 0)
 
+
+            // If alarm set to past add 1 day
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.DATE, 1);
+            }
+
             alarmManager.setExact(
                             AlarmManager.RTC,
                             calendar.timeInMillis,
