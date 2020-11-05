@@ -17,8 +17,6 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 
-
-
         val alarmId = intent.getIntExtra("ALARM_ID", 0)
 
         Log.d(LOG_TAG, "alarm triggered for alarm id $alarmId")
@@ -31,11 +29,10 @@ class AlarmReceiver : BroadcastReceiver() {
             val notification = AlarmNotification(context, alarm)
             notification.show()
 
-            context.startService(Intent(context, SoundService::class.java))
         }
 
-        Toast.makeText(context, "Alarm triggered", Toast.LENGTH_SHORT).show()
 
+        //context.startService(Intent(context, SoundService::class.java))
 
     }
 }

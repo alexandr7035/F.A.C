@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
 
     // FIXME
-    fun testNotifications(v: View) {
+    fun enableNotifications(v: View) {
 
 
         val ctx = this as Context
@@ -89,16 +89,22 @@ class MainActivity : AppCompatActivity() {
             AlarmController.enableAlarm(ctx, alarm)
         }
 
-        /*
-        var notification: AlarmNotification =
-            AlarmNotification(this, AlarmEntity())
 
-        notification.show()
+    }
 
-        //start service and play music
-        //startService(Intent(this@MainActivity, SoundService::class.java))
 
-        */
+    // FIXME
+    fun disableNotifications(v: View) {
+
+        val ctx = this as Context
+
+        GlobalScope.launch {
+            val alarm = AlarmsRepository(ctx).getAlarmFromDB(1)
+
+            AlarmController.disableAlarm(ctx, alarm)
+        }
+
+
     }
 
 

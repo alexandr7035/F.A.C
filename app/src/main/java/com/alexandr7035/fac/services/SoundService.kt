@@ -56,6 +56,8 @@ class SoundService: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
+        Log.d(LOG_TAG, "sound service onStart() called")
         player.start()
         return START_NOT_STICKY
     }

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.alexandr7035.fac.db.AlarmEntity
+import com.alexandr7035.fac.db.AlarmsRepository
 import java.util.*
 
 class AlarmController {
@@ -28,9 +29,16 @@ class AlarmController {
             // Pass task id to alarm receiver
             intent.putExtra("ALARM_ID", alarm.id)
 
+            // Gen request code for pending intent
+            // Save to db
+            val requestCode = genRequestCode()
+            alarm.pi_request_code = requestCode
+            AlarmsRepository(context).updateAlarmInDB(alarm)
+
             val pendingIntent : PendingIntent = PendingIntent.getBroadcast(
                 context,
-                1, intent,
+                requestCode,
+                intent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
 
 
@@ -48,7 +56,7 @@ class AlarmController {
             }
 
             alarmManager.setExact(
-                            AlarmManager.RTC,
+                            AlarmManager.RTC_WAKEUP,
                             calendar.timeInMillis,
                             pendingIntent
             );
@@ -56,10 +64,32 @@ class AlarmController {
         }
 
 
-        fun disableAlarm(context: Context) {
+        fun disableAlarm(context: Context, alarm: AlarmEntity) {
+            Log.d(LOG_TAG, "disable alarm called")
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+            val intent = Intent(context, AlarmReceiver::class.java)
+            val requestCode = alarm.pi_request_code
+
+            val pendingIntent : PendingIntent = PendingIntent.getBroadcast(
+                context,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT)
+
+            alarmManager.cancel(pendingIntent)
+
+
+            // Reset request code in db
+            alarm.pi_request_code = 0
+            AlarmsRepository(context).updateAlarmInDB(alarm)
 
         }
 
+
+        fun genRequestCode(): Int {
+            return  (0..2147483647).random()
+        }
     }
 
 }
