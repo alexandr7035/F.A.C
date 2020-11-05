@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
             GlobalScope.launch {
 
-                val alarm = AlarmsRepository(ctx).getAlarmFromDB(1)
+                val alarm = AlarmsRepository(ctx).getAlarmFromDB(alarm_id)
 
                 if (alarm.enabled) {
                     AlarmController.disableAlarm(ctx, alarm)
