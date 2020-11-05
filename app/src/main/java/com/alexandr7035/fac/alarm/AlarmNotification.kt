@@ -23,7 +23,7 @@ class AlarmNotification(private var context: Context, alarm: AlarmEntity) {
 
         // Set params
         builder.setContentTitle(alarm.name)
-        builder.setContentText("Будильник - ${alarm.hours}:${alarm.minutes}")
+        builder.setContentText("Будильник - " +  String.format("%02d", alarm.hours) + ":" +  String.format("%02d", alarm.minutes))
         builder.setSmallIcon(R.drawable.ic_alarm_clock)
         builder.priority = NotificationCompat.PRIORITY_MAX
 
