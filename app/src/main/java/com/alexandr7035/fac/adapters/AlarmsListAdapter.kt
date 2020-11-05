@@ -14,6 +14,7 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
     private var items: List<AlarmEntity> = ArrayList()
     val LOG_TAG = "DEBUG_FAC"
     private lateinit var alarmClickListener: AlarmClickListener
+    private lateinit var alarmToggleBtnClickListener: AlarmToggleBtnClickListener
 
     fun setItems(items: List<AlarmEntity>) {
         this.items = items
@@ -43,10 +44,10 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
 
         // Set icon to clock btn
         if (items[position].enabled){
-            holder.itemView.toggleBtn.setImageResource(R.drawable.ic_alarm_clock_off)
+            holder.itemView.alarmToggleBtn.setImageResource(R.drawable.ic_alarm_clock_off)
         }
         else {
-            holder.itemView.toggleBtn.setImageResource(R.drawable.ic_alarm_clock)
+            holder.itemView.alarmToggleBtn.setImageResource(R.drawable.ic_alarm_clock)
         }
 
         // Set id
@@ -68,14 +69,21 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
         init {
             itemView.setOnClickListener(this)
             itemView.setOnLongClickListener(this)
+            itemView.alarmToggleBtn.setOnClickListener(this)
         }
 
 
-        override fun onClick(v: View?) {
+        override fun onClick(v: View) {
+
+            if (v.id == itemView.alarmToggleBtn.id)  {
+                alarmToggleBtnClickListener.onAlarmToggleBtnClick(alarmId, adapterPosition)
+                return
+            }
+
             alarmClickListener.onAlarmClick(alarmId, adapterPosition)
         }
 
-        override fun onLongClick(v: View?): Boolean {
+        override fun onLongClick(v: View): Boolean {
             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
@@ -90,12 +98,20 @@ class AlarmsListAdapter : RecyclerView.Adapter<AlarmsListAdapter.ViewHolder>() {
         fun onLongAlarmClick(alarm_id: Int, position: Int)
     }
 
+    interface AlarmToggleBtnClickListener {
+        fun onAlarmToggleBtnClick(alarm_id: Int, position: Int)
+    }
+
    fun setAlarmClickListener(listener: AlarmClickListener) {
         alarmClickListener = listener
     }
 
    fun setAlarmLongClickListener(listener: AlarmLongClickListener) {
 
+    }
+
+    fun setAlarmToggleBtnClickListener(listener: AlarmToggleBtnClickListener) {
+        alarmToggleBtnClickListener = listener
     }
 
 }

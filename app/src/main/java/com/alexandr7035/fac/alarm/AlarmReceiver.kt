@@ -29,8 +29,13 @@ class AlarmReceiver : BroadcastReceiver() {
             val notification = AlarmNotification(context, alarm)
             notification.show()
 
-        }
 
+            // FIXME
+            // Now disable alarm after notification
+            // But may be fixed later
+            AlarmController.disableAlarm(context, alarm)
+
+        }
 
         //context.startService(Intent(context, SoundService::class.java))
 

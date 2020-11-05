@@ -3,6 +3,7 @@ package com.alexandr7035.fac
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
 
     private lateinit var defaultClickListener: DefaultItemClickListener
+    private lateinit var toggleClickListenerr: ToggleClickListener
 
     var notId: Int = 1
 
@@ -57,6 +59,10 @@ class MainActivity : AppCompatActivity() {
         defaultClickListener = DefaultItemClickListener()
         adapter.setAlarmClickListener(defaultClickListener)
 
+        // For alarm toggle btn
+        toggleClickListenerr = ToggleClickListener()
+        adapter.setAlarmToggleBtnClickListener(toggleClickListenerr)
+
     }
 
 
@@ -68,11 +74,37 @@ class MainActivity : AppCompatActivity() {
 
     inner class DefaultItemClickListener: AlarmsListAdapter.AlarmClickListener {
         override fun onAlarmClick(alarm_id: Int, position: Int) {
-            //Log.d(LOG_TAG, "clicked position " + position + " id " + skill_id);
+            Log.d(LOG_TAG, "clicked position $position id $alarm_id");
             val intent = Intent(this@MainActivity, AlarmActivity::class.java)
             intent.putExtra("PASSED_ALARM_ID", alarm_id)
             startActivity(intent)
         }
+    }
+
+    inner class ToggleClickListener: AlarmsListAdapter.AlarmToggleBtnClickListener {
+        override fun onAlarmToggleBtnClick(alarm_id: Int, position: Int) {
+            Log.d(LOG_TAG, "toggle btn clicked")
+
+            val ctx = this@MainActivity as Context
+
+            GlobalScope.launch {
+
+                val alarm = AlarmsRepository(ctx).getAlarmFromDB(1)
+
+                if (alarm.enabled) {
+                    AlarmController.disableAlarm(ctx, alarm)
+                }
+                else {
+                    AlarmController.disableAlarm(ctx, alarm)
+                    AlarmController.enableAlarm(ctx, alarm)
+                }
+
+            }
+
+            adapter.notifyItemChanged(position)
+
+        }
+
     }
 
 

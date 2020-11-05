@@ -11,7 +11,7 @@ class AlarmEntity(@PrimaryKey(autoGenerate = true)
                   var hours: Int = 0,
                   var minutes: Int = 0,
                   var pi_request_code: Int = 0,
-                  var enabled: Boolean = true) {
+                  var enabled: Boolean = false) {
 
 
     // To simplify debug process

@@ -33,6 +33,7 @@ class AlarmController {
             // Save to db
             val requestCode = genRequestCode()
             alarm.pi_request_code = requestCode
+            alarm.enabled = true
             AlarmsRepository(context).updateAlarmInDB(alarm)
 
             val pendingIntent : PendingIntent = PendingIntent.getBroadcast(
@@ -82,6 +83,7 @@ class AlarmController {
 
             // Reset request code in db
             alarm.pi_request_code = 0
+            alarm.enabled = false
             AlarmsRepository(context).updateAlarmInDB(alarm)
 
         }

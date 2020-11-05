@@ -53,6 +53,7 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             newAlarm.name = getString(R.string.alarm_default_name)
             newAlarm.hours = initialCalendar.get(Calendar.HOUR_OF_DAY)
             newAlarm.minutes = initialCalendar.get(Calendar.MINUTE)
+            newAlarm.enabled = true
 
             alarmLiveData = MutableLiveData<AlarmEntity>(newAlarm)
 
@@ -89,7 +90,6 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         alarm.hours = hoursView.text.toString().toInt()
         alarm.minutes = minutesView.text.toString().toInt()
         alarm.name = nameView.text.toString()
-        alarm.enabled = true
 
         Log.d(LOG_TAG, alarm.toString())
 
@@ -101,6 +101,15 @@ class AlarmActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         else {
             alarm.id = passedAlarmId
             viewModel.updateAlarm(alarm)
+        }
+
+
+        if (alarm.enabled) {
+            AlarmController.disableAlarm(this, alarm)
+            AlarmController.enableAlarm(this, alarm)
+        }
+        else {
+            AlarmController.disableAlarm(this, alarm)
         }
 
         finish()

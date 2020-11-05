@@ -37,7 +37,7 @@
         app:layout_constraintVertical_bias="0.508" />
 
     <ImageButton
-        android:id="@+id/toggleBtn"
+        android:id="@+id/alarmToggleBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
