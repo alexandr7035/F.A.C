@@ -108,36 +108,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    // FIXME
-    fun enableNotifications(v: View) {
-
-
-        val ctx = this as Context
-
-        GlobalScope.launch {
-            val alarm = AlarmsRepository(ctx).getAlarmFromDB(1)
-
-
-            AlarmController.enableAlarm(ctx, alarm)
-        }
-
-
-    }
-
-
-    // FIXME
-    fun disableNotifications(v: View) {
-
-        val ctx = this as Context
-
-        GlobalScope.launch {
-            val alarm = AlarmsRepository(ctx).getAlarmFromDB(1)
-
-            AlarmController.disableAlarm(ctx, alarm)
-        }
-
-
-    }
 
 
 }
